@@ -29,7 +29,8 @@ footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
-	line-height: 1;
+  line-height: 1;
+  font-family: sans-serif;
 }
 ol, ul {
 	list-style: none;
@@ -62,11 +63,40 @@ body {
 
 .tabs-container {
   flex-direction: column;
+  justify-content: space-between;
+  height: 400px;
+  border: 3px solid rgb(111, 111, 111);
+}
+
+.tab {
+  display: inline-block;
+  padding: 0.35em 1.2em;
+  border: 1px solid rgb(111, 111, 111);
+  width: 200px;
+  height: 40px;
+  font-size: 14px;
+}
+
+.active {
+  background-color:  rgb(136, 179, 199);
+  font-weight: bold;
+}
+
+.tab:focus {
+  outline: 0;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.tab:hover {
+  cursor: pointer;
+  font-size: 15px;
 }
 
 .graph {
   display: none;
 }
+
 
 .radio-container {
   position: absolute;

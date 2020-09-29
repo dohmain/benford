@@ -4,11 +4,12 @@ function showGraph(event, graphContent) {
     graphs[i].style.display = "none"
   };
 
-  let tabButtons = document.getElementsByClassName('tab-button');
-  for (let i = 0; i < tabButtons.length; i ++) {
-    tabButtons[i].className = tabButtons[i].className.replace('active', '')
+  let tabLabels = document.getElementsByClassName('tab-label');
+  for (let i = 0; i < tabLabels.length; i ++) {
+    tabLabels[i].className = tabLabels[i].className.replace('active', '')
   };
   document.getElementById(graphContent).style.display = 'block';
+
   event.currentTarget.className += ' active';
 }
 
@@ -322,7 +323,6 @@ d3.csv('./data/fortune500_2020.csv').then((data, error) => {
   if (error) throw error;
   let drawData = [{digit: 1, count: 1}, {digit: 2, count: 1}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
   data.forEach(d => {
-    console.log(d)
     let firstDigit = d['MarketValue '].toString().slice(0,1);
     if (firstDigit != 0 && !isNaN(firstDigit)) drawData[firstDigit - 1].count++;
   })
