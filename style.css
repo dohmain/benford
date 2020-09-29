@@ -57,6 +57,7 @@ body {
 .main-container {
   display: flex;
   display: row;
+  margin-top: 50px;
 }
 
 .tabs-container {
@@ -65,4 +66,12 @@ body {
 
 .graph {
   display: none;
+}
+
+.radio-container {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  margin-left: 400px;
+  margin-top: 40px;
 }
