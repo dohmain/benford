@@ -218,7 +218,6 @@ d3.csv('./data/periodictable.csv').then((data, error) => {
     let firstDigit = d.AtomicMass.toString().slice(0,1);
     if (firstDigit != 0) drawData[firstDigit - 1].count++;
   })
-  console.log(drawData)
 
   const svgPerTable = d3.select('#elements-graph')
     .append('svg')
@@ -245,7 +244,6 @@ d3.csv('./data/fortune2000_2020.csv').then((data, error) => {
     let firstDigit = d["Market Value"].toString().slice(0,1);
     if (firstDigit != 0) drawData[firstDigit - 1].count++;
   })
-  console.log(drawData)
 
   const svgFortunesTable = d3.select('#fortunes-graph')
     .append('svg')
@@ -261,6 +259,33 @@ d3.csv('./data/fortune2000_2020.csv').then((data, error) => {
 
   const g = svgFortunesTable.append('g')
     .attr('class', 'fortunes-group')
+
+  drawGraph(drawData, g)
+})
+
+d3.csv('./data/reddit.csv').then((data, error) => {
+  // data from frontpagemetrics.com 2020/09/29
+  if (error) throw error;
+  let drawData = [{digit: 1, count: 1}, {digit: 2, count: 1}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
+  data.forEach(d => {
+    let firstDigit = d.Subscribers.toString().slice(0,1);
+    if (firstDigit != 0) drawData[firstDigit - 1].count++;
+  })
+  
+  const svgReddit = d3.select('#reddit-graph')
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height)
+    .style('border', `3px solid ${borderColor}`)
+
+  svgReddit.append('rect')
+    .attr('class', 'main-div')
+    .style('fill', backgroundColor)
+    .attr('width', width)
+    .attr('height', height);
+
+  const g = svgReddit.append('g')
+    .attr('class', 'reddit-group')
 
   drawGraph(drawData, g)
 })
