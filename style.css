@@ -104,3 +104,8 @@ body {
   margin-left: 420px;
   margin-top: 30px;
 }
+
+.graph-title {
+  font-size: 24px;
+  font-weight: bold;
+}
