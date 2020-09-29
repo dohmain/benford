@@ -30,10 +30,16 @@
           <button class="tab-label tab" id="elements-tab" onclick="showGraph(event, 'elements-graph')">Atomic Mass</button>
         </div>
         <div>
-          <button class="tab-label tab" id="fortunes-tab" onclick="showGraph(event, 'fortunes-graph')">Fortune 2000</button>
+          <button class="tab-label tab" id="fortunes-tab" onclick="showGraph(event, 'fortunes-graph')">Fortune 2000 (Global)</button>
+        </div>
+        <div>
+          <button class="tab-label tab" id="us500-tab" onclick="showGraph(event, 'us500-graph')">Fortune 500 (US)</button>
         </div>
         <div>
           <button class="tab-label tab" id="reddit-tab" onclick="showGraph(event, 'reddit-graph')">Reddit</button>
+        </div>
+        <div>
+          <button class="tab-label tab" id="movies-tab" onclick="showGraph(event, 'movies-graph')">Movies</button>
         </div>
       </div>
       <div class="main-graph-container">
@@ -56,20 +62,15 @@
             </label>
           </div>
         </div>
-        <div class="us-pop-container graph" id="us-pop-graph">
-        </div>
-        <div class="world-pop-container graph" id="world-pop-graph">
-        </div>
-        <div class="world-area-container graph" id="world-area-graph">
-        </div>
-        <div class="fib-seq-container graph" id="fib-seq-graph">
-        </div>
-        <div class="elements-container graph" id="elements-graph">
-        </div>
-        <div class="fortunes-container graph" id="fortunes-graph">
-        </div>
-        <div class="reddit-container graph" id="reddit-graph">
-        </div>
+        <div class="us-pop-container graph" id="us-pop-graph"></div>
+        <div class="world-pop-container graph" id="world-pop-graph"></div>
+        <div class="world-area-container graph" id="world-area-graph"></div>
+        <div class="fib-seq-container graph" id="fib-seq-graph"></div>
+        <div class="elements-container graph" id="elements-graph"></div>
+        <div class="fortunes-container graph" id="fortunes-graph"></div>
+        <div class="us500-container graph" id="us500-graph"></div>
+        <div class="reddit-container graph" id="reddit-graph"></div>
+        <div class="movies-container graph" id="movies-graph"></div>
       </div>
       <script src="./benford.js"></script>
   </body>

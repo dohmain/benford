@@ -271,7 +271,7 @@ d3.csv('./data/reddit.csv').then((data, error) => {
     let firstDigit = d.Subscribers.toString().slice(0,1);
     if (firstDigit != 0) drawData[firstDigit - 1].count++;
   })
-  
+
   const svgReddit = d3.select('#reddit-graph')
     .append('svg')
     .attr('width', width)
@@ -289,6 +289,61 @@ d3.csv('./data/reddit.csv').then((data, error) => {
 
   drawGraph(drawData, g)
 })
+
+d3.csv('./data/movies2019.csv').then((data, error) => {
+  // data from boxofficemojo.com
+  if (error) throw error;
+  let drawData = [{digit: 1, count: 1}, {digit: 2, count: 1}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
+  data.forEach(d => {
+    let firstDigit = d.Gross.toString().slice(0,1);
+    if (firstDigit != 0) drawData[firstDigit - 1].count++;
+  })
+
+  const svgMovies = d3.select('#movies-graph')
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height)
+    .style('border', `3px solid ${borderColor}`)
+
+  svgMovies.append('rect')
+    .attr('class', 'main-div')
+    .style('fill', backgroundColor)
+    .attr('width', width)
+    .attr('height', height);
+
+  const g = svgMovies.append('g')
+    .attr('class', 'movies-group')
+
+  drawGraph(drawData, g)
+}) 
+
+d3.csv('./data/fortune500_2020.csv').then((data, error) => {
+  // data from boxofficemojo.com
+  if (error) throw error;
+  let drawData = [{digit: 1, count: 1}, {digit: 2, count: 1}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
+  data.forEach(d => {
+    console.log(d)
+    let firstDigit = d['MarketValue '].toString().slice(0,1);
+    if (firstDigit != 0 && !isNaN(firstDigit)) drawData[firstDigit - 1].count++;
+  })
+
+  const svgUS500 = d3.select('#us500-graph')
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height)
+    .style('border', `3px solid ${borderColor}`)
+
+  svgUS500.append('rect')
+    .attr('class', 'main-div')
+    .style('fill', backgroundColor)
+    .attr('width', width)
+    .attr('height', height);
+
+  const g = svgUS500.append('g')
+    .attr('class', 'us500-group')
+
+  drawGraph(drawData, g)
+}) 
 
 
 function drawGraph(drawData, selection) {
