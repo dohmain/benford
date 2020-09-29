@@ -174,6 +174,43 @@ d3.json('./data/WorldPop.json').then((data, error) => {
   drawGraph(drawData, g)
 })
 
+fibsData();
+
+function fibsData() {
+  let drawData = [{digit: 1, count: 1}, {digit: 2, count: 1}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
+  let prevNum = 1;
+  let currNum = 1;
+  for (let i = 0; i < 1000; i++){
+    if (i <= 2) {
+      drawData[0].count++
+    } else {
+      let sum = prevNum + currNum;
+      prevNum = currNum;
+      currNum = sum;
+      let firstDigit = sum.toString().slice(0,1);
+      drawData[firstDigit - 1].count++;
+    }
+  }
+
+  const svgFibSeq = d3.select('#fib-seq-graph')
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height)
+    .style('border', `3px solid ${borderColor}`)
+
+  svgFibSeq.append('rect')
+    .attr('class', 'main-div')
+    .style('fill', backgroundColor)
+    .attr('width', width)
+    .attr('height', height);
+
+  const g = svgFibSeq.append('g')
+    .attr('class', 'fib-seq-group')
+
+  drawGraph(drawData, g)
+}
+
+
 function drawGraph(drawData, selection) {
 
   let countTotal = drawData.reduce(((acc, curr) => curr.count + acc), 0);
@@ -183,8 +220,13 @@ function drawGraph(drawData, selection) {
     .range([margin.left, width - margin.right])
     .padding(.3);
 
+    debugger;
+  const drawDataYMax = d3.max(Object.values(drawData).map(d => d.count / countTotal * 100));
+  const benfordDataYMax = d3.max(Object.values(benfordData).map(d => d.count / 10));
+  const yDomainMax = drawDataYMax > benfordDataYMax ? drawDataYMax : benfordDataYMax;
+  debugger;
   const yScale = d3.scaleLinear()
-    .domain([0, d3.max(Object.values(drawData).map(d => d.count / countTotal * 100)) + 10])
+    .domain([0, yDomainMax + 5])
     .range([height - margin.top, margin.bottom]);
 
   const xAxis = d3.axisBottom()

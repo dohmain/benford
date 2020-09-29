@@ -23,10 +23,13 @@
         <div>
           <button class="tab-label tab" id="world-area-tab" onclick="showGraph(event, 'world-area-graph')">World Area</button>
         </div>
+        <div>
+          <button class="tab-label tab" id="fib-seq-tab" onclick="showGraph(event, 'fib-seq-graph')">Fibonacci Numbers</button>
+        </div>
       </div>
       <div class="main-graph-container">
         <div class="covid-graph-container graph" id="covid-graph">
-          <!-- <div class="radio-container">
+          <div class="radio-container">
             <label>
               <input class="radio-button" type="radio" name="category-radio" value="deathIncrease" checked>Deaths
             </label>
@@ -42,13 +45,15 @@
             <label>
               <input class="radio-button" type="radio" name="category-radio" value="totalTestResultsIncrease">Total Test Results
             </label>
-          </div> -->
+          </div>
         </div>
         <div class="us-pop-container graph" id="us-pop-graph">
         </div>
         <div class="world-pop-container graph" id="world-pop-graph">
         </div>
         <div class="world-area-container graph" id="world-area-graph">
+        </div>
+        <div class="fib-seq-container graph" id="fib-seq-graph">
         </div>
       </div>
       <script src="./benford.js"></script>
