@@ -82,7 +82,6 @@ d3.json('./data/USDaily.json').then((data, error) => {
 
     const yScale = d3.scaleLinear()
       .domain([0, d3.max(Object.values(drawData).map(d => d.count / countTotal * 100)) + 10])
-      // .domain([0, 100])
       .range([height - margin.top, margin.bottom]);
 
     const xAxis = d3.axisBottom()
@@ -126,8 +125,6 @@ d3.csv('./data/2019_USPOPEST.csv').then((data, error) => {
     .style('border', `3px solid ${borderColor}`)
 
   let countTotal = drawData.reduce(((acc, curr) => curr.count + acc), 0);
-
-  console.log("countTotal", countTotal)
   
   const xScale = d3.scaleBand()
     .domain([1, 2, 3, 4, 5, 6, 7, 8, 9])
@@ -136,7 +133,6 @@ d3.csv('./data/2019_USPOPEST.csv').then((data, error) => {
 
   const yScale = d3.scaleLinear()
     .domain([0, d3.max(Object.values(drawData).map(d => d.count / countTotal * 100)) + 10])
-    // .domain([0, 100])
     .range([height - margin.top, margin.bottom]);
 
   const xAxis = d3.axisBottom()
@@ -161,16 +157,89 @@ d3.json('./data/WorldPop.json').then((data, error) => {
   // data from worldpopulationreview.com
   if (error) throw error;
 
-  let firstDigitCount = [
-    {pop2018: [{digit: 1, count: 0}, {digit: 2, count: 0}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]},
-    {pop2019: [{digit: 1, count: 0}, {digit: 2, count: 0}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]},
-    {area: [{digit: 1, count: 0}, {digit: 2, count: 0}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]},
-    {density: [{digit: 1, count: 0}, {digit: 2, count: 0}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]},
-  ];
-
+  let drawData = [{digit: 1, count: 0}, {digit: 2, count: 0}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
   data.forEach(data => {
-
+    // there is an anomoly in the data; pop2020 for Djibouti is an INT instead of STRING
+    let popFirstDigit = data.pop2020.toString().slice(0,1);
+    if (popFirstDigit != 0) drawData[popFirstDigit - 1].count++;
   })
+
+  const svgWorldPop = d3.select('#world-pop-graph')
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height)
+    .style('border', `3px solid ${borderColor}`)
+
+  let countTotal = drawData.reduce(((acc, curr) => curr.count + acc), 0);
+
+  const xScale = d3.scaleBand()
+    .domain([1, 2, 3, 4, 5, 6, 7, 8, 9])
+    .range([margin.left, width - margin.right])
+    .padding(.3);
+
+  const yScale = d3.scaleLinear()
+    .domain([0, d3.max(Object.values(drawData).map(d => d.count / countTotal * 100)) + 10])
+    .range([height - margin.top, margin.bottom]);
+
+  const xAxis = d3.axisBottom()
+    .scale(xScale);
+
+  const yAxis = d3.axisLeft()
+    .scale(yScale);
+
+  svgWorldPop.append('rect')
+    .attr('class', 'main-div')
+    .style('fill', backgroundColor)
+    .attr('width', width)
+    .attr('height', height);
+
+  const g = svgWorldPop.append('g')
+    .attr('class', 'world-pop-graph-group')
+  drawGraph(drawData, g, xScale, yScale, xAxis, yAxis, countTotal)
+})
+
+d3.json('./data/WorldPop.json').then((data, error) => {
+  // data from worldpopulationreview.com
+  if (error) throw error;
+
+  let drawData = [{digit: 1, count: 0}, {digit: 2, count: 0}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
+  data.forEach(data => {
+    let areaFirstDigit = data.area.toString().slice(0,1);
+    if (areaFirstDigit != 0) drawData[areaFirstDigit - 1].count++;
+  })
+
+  const svgWorldArea = d3.select('#world-area-graph')
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height)
+    .style('border', `3px solid ${borderColor}`)
+
+  let countTotal = drawData.reduce(((acc, curr) => curr.count + acc), 0);
+
+  const xScale = d3.scaleBand()
+    .domain([1, 2, 3, 4, 5, 6, 7, 8, 9])
+    .range([margin.left, width - margin.right])
+    .padding(.3);
+
+  const yScale = d3.scaleLinear()
+    .domain([0, d3.max(Object.values(drawData).map(d => d.count / countTotal * 100)) + 10])
+    .range([height - margin.top, margin.bottom]);
+
+  const xAxis = d3.axisBottom()
+    .scale(xScale);
+
+  const yAxis = d3.axisLeft()
+    .scale(yScale);
+
+  svgWorldArea.append('rect')
+    .attr('class', 'main-div')
+    .style('fill', backgroundColor)
+    .attr('width', width)
+    .attr('height', height);
+
+  const g = svgWorldArea.append('g')
+    .attr('class', 'world-pop-graph-group')
+  drawGraph(drawData, g, xScale, yScale, xAxis, yAxis, countTotal)
 })
 
 function drawGraph(drawData, selection, xScale, yScale, xAxis, yAxis, countTotal) {
