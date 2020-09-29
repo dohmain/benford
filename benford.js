@@ -24,7 +24,8 @@ const barColor = "rgba(111, 111, 111, .5)";
 const borderColor = "rgba(111, 111, 111)";
 const backgroundColor = "#E5E5E5";
 const dotColor = "rgb(162, 45, 63)";
-const axisLabelColor =  "rgb(111, 111, 111)";
+// const axisLabelColor =  "rgb(111, 111, 111)";
+const axisLabelColor = "rgb(52, 118, 148)"
 const axisLineColor = "black"
 
 let benfordData = [
@@ -405,11 +406,13 @@ function drawGraph(drawData, selection) {
     .attr('y', height - 8)
     .attr('text-anchor', 'middle')
     .style('fill', axisLabelColor)
+    .style('font-weight', 'bold')
     .text('First Digit')
 
   selection.append('text')
     .attr('text-anchor', 'middle')
-    .attr('transform', `translate(${margin.left / 2}, ${height / 2}) rotate(270)`)
+    .attr('transform', `translate(${margin.left - 30}, ${height / 2}) rotate(270)`)
     .style('fill', axisLabelColor)
+    .style('font-weight', 'bold')
     .text('Occurance %')
 }

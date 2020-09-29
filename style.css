@@ -78,7 +78,7 @@ body {
 }
 
 .active {
-  background-color:  rgb(136, 179, 199);
+  background-color:  rgb(108, 171, 201);
   font-weight: bold;
 }
 
@@ -97,11 +97,10 @@ body {
   display: none;
 }
 
-
 .radio-container {
   position: absolute;
   display: flex;
   flex-direction: column;
-  margin-left: 400px;
-  margin-top: 40px;
+  margin-left: 420px;
+  margin-top: 30px;
 }
