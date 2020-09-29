@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://d3js.org/d3.v6.min.js"></script>
-  <script src="./benford.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
   <link href="./style.css" rel="stylesheet">
   <title>Benford's Law</title>
@@ -21,7 +20,7 @@
       </div>
       <div class="main-graph-container">
         <div class="covid-graph-container graph" id="covid-graph">
-          <div class="radio-container">
+          <!-- <div class="radio-container">
             <label>
               <input class="radio-button" type="radio" name="category-radio" value="deathIncrease" checked>Deaths
             </label>
@@ -37,10 +36,11 @@
             <label>
               <input class="radio-button" type="radio" name="category-radio" value="totalTestResultsIncrease">Total Test Results
             </label>
-          </div>
+          </div> -->
         </div>
         <div class="us-pop-container graph" id="us-pop-graph">
         </div>
       </div>
+      <script src="./benford.js"></script>
   </body>
 </html>

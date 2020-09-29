@@ -62,3 +62,7 @@ body {
 .tabs-container {
   flex-direction: column;
 }
+
+.graph {
+  display: none;
+}

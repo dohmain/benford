@@ -12,6 +12,8 @@ function showGraph(event, graphContent) {
   event.currentTarget.className += ' active';
 }
 
+document.getElementById('covid-tab').click();
+
 const margin = {
   top: 40, right: 20, bottom: 30, left: 50
 };
@@ -44,7 +46,6 @@ d3.json('./data/USDaily.json').then((data, error) => {
     categories.forEach((currCat, i) => {
       let firstDigit = Math.abs(d[currCat]).toString().slice(0,1);
       if (firstDigit != 0) {
-        let digitKey = "digit" + firstDigit;
         firstDigitCount[i][currCat][firstDigit - 1].count++;
       };
     })
