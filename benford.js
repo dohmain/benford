@@ -73,23 +73,6 @@ d3.json('./data/USDaily.json').then((data, error) => {
 
   function redraw(drawData) {
 
-    let countTotal = drawData.reduce(((acc, curr) => curr.count + acc), 0);
-
-    const xScale = d3.scaleBand()
-      .domain([1, 2, 3, 4, 5, 6, 7, 8, 9])
-      .range([margin.left, width - margin.right])
-      .padding(.3);
-
-    const yScale = d3.scaleLinear()
-      .domain([0, d3.max(Object.values(drawData).map(d => d.count / countTotal * 100)) + 10])
-      .range([height - margin.top, margin.bottom]);
-
-    const xAxis = d3.axisBottom()
-      .scale(xScale);
-
-    const yAxis = d3.axisLeft()
-      .scale(yScale);
-
     svgCovid.append('rect')
       .attr('class', 'main-div')
       .style('fill', backgroundColor)
@@ -99,7 +82,7 @@ d3.json('./data/USDaily.json').then((data, error) => {
     const g = svgCovid.append('g')
       .attr('class', 'covid-graph-group')
       
-    drawGraph(drawData, g, xScale, yScale, xAxis, yAxis, countTotal);
+    drawGraph(drawData, g);
   }
 })
 
@@ -124,23 +107,6 @@ d3.csv('./data/2019_USPOPEST.csv').then((data, error) => {
     .attr('height', height)
     .style('border', `3px solid ${borderColor}`)
 
-  let countTotal = drawData.reduce(((acc, curr) => curr.count + acc), 0);
-  
-  const xScale = d3.scaleBand()
-    .domain([1, 2, 3, 4, 5, 6, 7, 8, 9])
-    .range([margin.left, width - margin.right])
-    .padding(.3);
-
-  const yScale = d3.scaleLinear()
-    .domain([0, d3.max(Object.values(drawData).map(d => d.count / countTotal * 100)) + 10])
-    .range([height - margin.top, margin.bottom]);
-
-  const xAxis = d3.axisBottom()
-    .scale(xScale);
-
-  const yAxis = d3.axisLeft()
-    .scale(yScale);
-
   svgUSPop.append('rect')
     .attr('class', 'main-div')
     .style('fill', backgroundColor)
@@ -150,7 +116,7 @@ d3.csv('./data/2019_USPOPEST.csv').then((data, error) => {
   const g = svgUSPop.append('g')
     .attr('class', 'us-pop-graph-group')
 
-  drawGraph(drawData, g, xScale, yScale, xAxis, yAxis, countTotal)
+  drawGraph(drawData, g)
 })
 
 d3.json('./data/WorldPop.json').then((data, error) => {
@@ -170,23 +136,6 @@ d3.json('./data/WorldPop.json').then((data, error) => {
     .attr('height', height)
     .style('border', `3px solid ${borderColor}`)
 
-  let countTotal = drawData.reduce(((acc, curr) => curr.count + acc), 0);
-
-  const xScale = d3.scaleBand()
-    .domain([1, 2, 3, 4, 5, 6, 7, 8, 9])
-    .range([margin.left, width - margin.right])
-    .padding(.3);
-
-  const yScale = d3.scaleLinear()
-    .domain([0, d3.max(Object.values(drawData).map(d => d.count / countTotal * 100)) + 10])
-    .range([height - margin.top, margin.bottom]);
-
-  const xAxis = d3.axisBottom()
-    .scale(xScale);
-
-  const yAxis = d3.axisLeft()
-    .scale(yScale);
-
   svgWorldPop.append('rect')
     .attr('class', 'main-div')
     .style('fill', backgroundColor)
@@ -195,7 +144,7 @@ d3.json('./data/WorldPop.json').then((data, error) => {
 
   const g = svgWorldPop.append('g')
     .attr('class', 'world-pop-graph-group')
-  drawGraph(drawData, g, xScale, yScale, xAxis, yAxis, countTotal)
+  drawGraph(drawData, g)
 })
 
 d3.json('./data/WorldPop.json').then((data, error) => {
@@ -214,6 +163,19 @@ d3.json('./data/WorldPop.json').then((data, error) => {
     .attr('height', height)
     .style('border', `3px solid ${borderColor}`)
 
+  svgWorldArea.append('rect')
+    .attr('class', 'main-div')
+    .style('fill', backgroundColor)
+    .attr('width', width)
+    .attr('height', height);
+
+  const g = svgWorldArea.append('g')
+    .attr('class', 'world-pop-graph-group')
+  drawGraph(drawData, g)
+})
+
+function drawGraph(drawData, selection) {
+
   let countTotal = drawData.reduce(((acc, curr) => curr.count + acc), 0);
 
   const xScale = d3.scaleBand()
@@ -231,18 +193,6 @@ d3.json('./data/WorldPop.json').then((data, error) => {
   const yAxis = d3.axisLeft()
     .scale(yScale);
 
-  svgWorldArea.append('rect')
-    .attr('class', 'main-div')
-    .style('fill', backgroundColor)
-    .attr('width', width)
-    .attr('height', height);
-
-  const g = svgWorldArea.append('g')
-    .attr('class', 'world-pop-graph-group')
-  drawGraph(drawData, g, xScale, yScale, xAxis, yAxis, countTotal)
-})
-
-function drawGraph(drawData, selection, xScale, yScale, xAxis, yAxis, countTotal) {
   selection.selectAll('rect')
     .data(drawData)
     .join('rect')
