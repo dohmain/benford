@@ -210,6 +210,61 @@ function fibsData() {
   drawGraph(drawData, g)
 }
 
+d3.csv('./data/periodictable.csv').then((data, error) => {
+  // data from https://gist.github.com/GoodmanSciences
+  if (error) throw error;
+  let drawData = [{digit: 1, count: 1}, {digit: 2, count: 1}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
+  data.forEach(d => {
+    let firstDigit = d.AtomicMass.toString().slice(0,1);
+    if (firstDigit != 0) drawData[firstDigit - 1].count++;
+  })
+  console.log(drawData)
+
+  const svgPerTable = d3.select('#elements-graph')
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height)
+    .style('border', `3px solid ${borderColor}`)
+
+    svgPerTable.append('rect')
+    .attr('class', 'main-div')
+    .style('fill', backgroundColor)
+    .attr('width', width)
+    .attr('height', height);
+
+  const g = svgPerTable.append('g')
+    .attr('class', 'elements-group')
+
+  drawGraph(drawData, g)
+})
+
+d3.csv('./data/fortune2000_2020.csv').then((data, error) => {
+  if (error) throw error;
+  let drawData = [{digit: 1, count: 1}, {digit: 2, count: 1}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
+  data.forEach(d => {
+    let firstDigit = d["Market Value"].toString().slice(0,1);
+    if (firstDigit != 0) drawData[firstDigit - 1].count++;
+  })
+  console.log(drawData)
+
+  const svgFortunesTable = d3.select('#fortunes-graph')
+    .append('svg')
+    .attr('width', width)
+    .attr('height', height)
+    .style('border', `3px solid ${borderColor}`)
+
+  svgFortunesTable.append('rect')
+    .attr('class', 'main-div')
+    .style('fill', backgroundColor)
+    .attr('width', width)
+    .attr('height', height);
+
+  const g = svgFortunesTable.append('g')
+    .attr('class', 'fortunes-group')
+
+  drawGraph(drawData, g)
+})
+
 
 function drawGraph(drawData, selection) {
 
@@ -220,11 +275,10 @@ function drawGraph(drawData, selection) {
     .range([margin.left, width - margin.right])
     .padding(.3);
 
-    debugger;
   const drawDataYMax = d3.max(Object.values(drawData).map(d => d.count / countTotal * 100));
   const benfordDataYMax = d3.max(Object.values(benfordData).map(d => d.count / 10));
   const yDomainMax = drawDataYMax > benfordDataYMax ? drawDataYMax : benfordDataYMax;
-  debugger;
+
   const yScale = d3.scaleLinear()
     .domain([0, yDomainMax + 5])
     .range([height - margin.top, margin.bottom]);
