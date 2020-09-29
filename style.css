@@ -47,3 +47,18 @@ table {
 	border-spacing: 0;
 }
 
+/* my CSS */
+
+body {
+  display: table;
+  margin: auto;
+}
+
+.main-container {
+  display: flex;
+  display: row;
+}
+
+.tabs-container {
+  flex-direction: column;
+}
