@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <script src="./benford.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300&display=swap" rel="stylesheet">
+  <link href="./style.css" rel="stylesheet">
+  <title>Benford's Law</title>
+</head>
+  <body>
+    <div class="main-container">
+      <div class="tabs-container">
+        <button class="tab-label tab" id="covid-tab" onclick="showGraph(event, 'covid-graph')"></button>
+        <button class="tab-label tab" id="us-pop-tab" onclick="showGraph(event, 'us-pop-graph')"></button>
+      </div>
+      <div class="main-graph-container">
+        <div class="covid-graph-container graph" id="covid-graph">
+          <div class="radio-container">
+            <label>
+              <input class="radio-button" type="radio" name="category-radio" value="deathIncrease" checked>Deaths
+            </label>
+            <label>
+              <input class="radio-button" type="radio" name="category-radio" value="hospitalizedIncrease">Hospitalizations
+            </label>
+            <label>
+              <input class="radio-button" type="radio" name="category-radio" value="negativeIncrease">Negative Results
+            </label>
+            <label>
+              <input class="radio-button" type="radio" name="category-radio" value="positiveIncrease">Positive Results
+            </label>
+            <label>
+              <input class="radio-button" type="radio" name="category-radio" value="totalTestResultsIncrease">Total Test Results
+            </label>
+          </div>
+        </div>
+        <div class="us-pop-container graph" id="us-pop-graph">
+        </div>
+      </div>
+  </body>
+</html>
