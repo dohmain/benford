@@ -395,6 +395,23 @@ function drawGraph(drawData, selection, sourceURL) {
     .attr('cy', d => yScale(d.count / 10))
     .attr('r', 5)
     .attr('fill', dotColor)
+
+  selection.append('line')
+    .attr('x1', margin.left)
+    .attr('y1', yScale(11.1))
+    .attr('x2', width - margin.right)
+    .attr('y2', yScale(11.1))
+    .style('stroke', 'rgb(93, 128, 145)')
+    .style('stroke-width', 1)
+  
+  selection.append('text')
+    .attr('x', width - margin.right)
+    .attr('y', yScale(11.1))
+    .attr('text-anchor', 'end')
+    .attr('alignment-baseline', 'ideographic')
+    .attr('fill', 'rgb(93, 128, 145)')
+    .text('11.1%')
+
     
   const axisBottom = selection.append('g')
     .attr('class', 'x-axis')
