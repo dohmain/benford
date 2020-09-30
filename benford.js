@@ -299,7 +299,7 @@ d3.csv('./data/fortune2000_2020.csv').then((data, error) => {
   d3.select('#fortunes-graph')
   .append('div')
   .attr('class', 'graph-description-container')
-  .html('<h3 class="graph-title">Market Value of Fortune 2000 Global Companies</h3><p class="description-text">Fortune 2000 - 2020 list</p>')
+  .html('<h3 class="graph-title">Market Value of Fortune 2000 Companies</h3><p class="description-text">Fortune 2000 - 2020 list</p>')
 })
 
 d3.csv('./data/reddit.csv').then((data, error) => {
@@ -394,7 +394,7 @@ d3.csv('./data/fortune500_2020.csv').then((data, error) => {
 
   drawGraph(drawData, g, sourceURL)
 
-  d3.select('#fortunes-graph')
+  d3.select('#us500-graph')
   .append('div')
   .attr('class', 'graph-description-container')
   .html('<h3 class="graph-title">Market Value of Fortune 500 US Companies</h3><p class="description-text">Fortune 500 - 2020 list</p>')
