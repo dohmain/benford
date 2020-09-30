@@ -53,26 +53,53 @@ table {
 body {
   display: table;
   margin: auto;
+  box-sizing: border-box;
 }
 
 .intro-container h1 {
   font-size: 28px;
   font-weight: bold;
-  padding: 1.2em 1.2em
+  padding: 1em 1.2em;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: bold;
+  padding: .35em 1.2em;
+  text-align: center;
+}
+
+h3 {
+  font-size: 18px;
+  font-weight: bold;
+  padding: .35em 1.2em;
+  text-align: center;
+}
+
+p {
+  padding: .35em 1.2em;
+  line-height: 1.2;
+}
+
+.main-container {
+  width: 812px;
+  margin-top: 50px;
 }
 
 .intro-container {
-  width: 800px;
+  width: 100%;
   margin: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border: 3px solid rgb(111, 111, 111);
+  border-bottom: 0;
+  box-sizing: border-box;
 }
 
 .content-container {
   display: flex;
   display: row;
-  margin-top: 50px;
 }
 
 .tabs-container {
@@ -80,6 +107,7 @@ body {
   justify-content: space-between;
   height: 400px;
   border: 3px solid rgb(111, 111, 111);
+  /* box-sizing: border-box; */
 }
 
 .tab {
@@ -116,10 +144,16 @@ body {
   display: flex;
   flex-direction: column;
   margin-left: 420px;
-  margin-top: 30px;
+  margin-top: 100px;
 }
 
 .graph-title {
   font-size: 24px;
   font-weight: bold;
+  font-style: italic;
+}
+
+.source-link:hover {
+  cursor: pointer; 
+  color: blue;
 }

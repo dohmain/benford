@@ -20,7 +20,8 @@ const margin = {
 };
 const width = 600;
 const height = 400;
-const barColor = "rgba(111, 111, 111, .5)";
+// const barColor = "rgba(111, 111, 111, .5)";
+const barColor = "rgba(108, 171, 201, 1)";
 const borderColor = "rgba(111, 111, 111)";
 const backgroundColor = "#E5E5E5";
 const dotColor = "rgb(162, 45, 63)";
@@ -74,7 +75,7 @@ d3.json('./data/USDaily.json').then((data, error) => {
     });
 
   function redraw(drawData) {
-    let graphTitle = "Daily Change"
+    let sourceURL = "https://covidtracking.com/"
     svgCovid.append('rect')
       .attr('class', 'main-div')
       .style('fill', backgroundColor)
@@ -84,14 +85,14 @@ d3.json('./data/USDaily.json').then((data, error) => {
     const g = svgCovid.append('g')
       .attr('class', 'covid-graph-group');
 
-    drawGraph(drawData, g, graphTitle);
+    drawGraph(drawData, g, sourceURL);
   }
 })
 
 d3.csv('./data/2019_USPOPEST.csv').then((data, error) => {
-  // data from census.gov
+  // data from census.gov; 2019 estimates
   if (error) throw error;
-  let graphTitle = "U.S. Population by State"
+  let sourceURL = "https://www.census.gov/"
   let drawData = [
     {digit: 1, count: 0}, {digit: 2, count: 0}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}
   ];
@@ -118,13 +119,13 @@ d3.csv('./data/2019_USPOPEST.csv').then((data, error) => {
   const g = svgUSPop.append('g')
     .attr('class', 'us-pop-graph-group')
 
-  drawGraph(drawData, g, graphTitle)
+  drawGraph(drawData, g, sourceURL)
 })
 
 d3.json('./data/WorldPop.json').then((data, error) => {
-  // data from worldpopulationreview.com
+  // data from worldpopulationreview.com; 2020 estimates
   if (error) throw error;
-  let graphTitle = "World Population by Country"
+  let sourceURL = "https://worldpopulationreview.com/"
   let drawData = [{digit: 1, count: 0}, {digit: 2, count: 0}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
   data.forEach(data => {
     // there is an anomoly in the data; pop2020 for Djibouti is an INT instead of STRING
@@ -146,13 +147,13 @@ d3.json('./data/WorldPop.json').then((data, error) => {
 
   const g = svgWorldPop.append('g')
     .attr('class', 'world-pop-graph-group')
-  drawGraph(drawData, g, graphTitle)
+  drawGraph(drawData, g, sourceURL)
 })
 
 d3.json('./data/WorldPop.json').then((data, error) => {
   // data from worldpopulationreview.com
   if (error) throw error;
-  let graphTitle = "Area (km²) of Countries"
+  let sourceURL = "https://worldpopulationreview.com/"
   let drawData = [{digit: 1, count: 0}, {digit: 2, count: 0}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
   data.forEach(data => {
     let areaFirstDigit = data.area.toString().slice(0,1);
@@ -173,13 +174,13 @@ d3.json('./data/WorldPop.json').then((data, error) => {
 
   const g = svgWorldArea.append('g')
     .attr('class', 'world-pop-graph-group')
-  drawGraph(drawData, g, graphTitle)
+  drawGraph(drawData, g, sourceURL)
 })
 
 fibsData();
 
 function fibsData() {
-  let graphTitle = "Fibonacci Sequence"
+  let sourceURL = "https://en.wikipedia.org/wiki/Fibonacci_number"
   let drawData = [{digit: 1, count: 1}, {digit: 2, count: 1}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
   let prevNum = 1;
   let currNum = 1;
@@ -210,13 +211,13 @@ function fibsData() {
   const g = svgFibSeq.append('g')
     .attr('class', 'fib-seq-group')
 
-  drawGraph(drawData, g, graphTitle)
+  drawGraph(drawData, g, sourceURL)
 }
 
 d3.csv('./data/periodictable.csv').then((data, error) => {
   // data from https://gist.github.com/GoodmanSciences
   if (error) throw error;
-  let graphTitle = "Atomic Mass of Elements"
+  let sourceURL = "https://gist.github.com/GoodmanSciences"
   let drawData = [{digit: 1, count: 1}, {digit: 2, count: 1}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
   data.forEach(d => {
     let firstDigit = d.AtomicMass.toString().slice(0,1);
@@ -238,12 +239,12 @@ d3.csv('./data/periodictable.csv').then((data, error) => {
   const g = svgPerTable.append('g')
     .attr('class', 'elements-group')
 
-  drawGraph(drawData, g, graphTitle)
+  drawGraph(drawData, g, sourceURL)
 })
 
 d3.csv('./data/fortune2000_2020.csv').then((data, error) => {
   if (error) throw error;
-  let graphTitle = "Market Value of Fortune 2000 Companies"
+  let sourceURL = "https://www.forbes.com/global2000"
   let drawData = [{digit: 1, count: 1}, {digit: 2, count: 1}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
   data.forEach(d => {
     let firstDigit = d["Market Value"].toString().slice(0,1);
@@ -265,13 +266,13 @@ d3.csv('./data/fortune2000_2020.csv').then((data, error) => {
   const g = svgFortunesTable.append('g')
     .attr('class', 'fortunes-group')
 
-  drawGraph(drawData, g, graphTitle)
+  drawGraph(drawData, g, sourceURL)
 })
 
 d3.csv('./data/reddit.csv').then((data, error) => {
   // data from frontpagemetrics.com 2020/09/29
   if (error) throw error;
-  let graphTitle = "Reddit Subscribers by SubReddit"
+  let sourceURL = "https://frontpagemetrics.com/"
   let drawData = [{digit: 1, count: 1}, {digit: 2, count: 1}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
   data.forEach(d => {
     let firstDigit = d.Subscribers.toString().slice(0,1);
@@ -293,13 +294,13 @@ d3.csv('./data/reddit.csv').then((data, error) => {
   const g = svgReddit.append('g')
     .attr('class', 'reddit-group')
 
-  drawGraph(drawData, g, graphTitle)
+  drawGraph(drawData, g, sourceURL)
 })
 
 d3.csv('./data/movies2019.csv').then((data, error) => {
   // data from boxofficemojo.com
   if (error) throw error;
-  let graphTitle = "2019 Movie Gross Revenues"
+  let sourceURL = "https://www.boxofficemojo.com/"
   let drawData = [{digit: 1, count: 1}, {digit: 2, count: 1}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
   data.forEach(d => {
     let firstDigit = d.Gross.toString().slice(0,1);
@@ -321,13 +322,13 @@ d3.csv('./data/movies2019.csv').then((data, error) => {
   const g = svgMovies.append('g')
     .attr('class', 'movies-group')
 
-  drawGraph(drawData, g, graphTitle)
+  drawGraph(drawData, g, sourceURL)
 }) 
 
 d3.csv('./data/fortune500_2020.csv').then((data, error) => {
 
   if (error) throw error;
-  let graphTitle = "Market Value of Fortune 500 Companies"
+  let sourceURL = "https://fortune.com/fortune500/"
   let drawData = [{digit: 1, count: 1}, {digit: 2, count: 1}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
   data.forEach(d => {
     let firstDigit = d['MarketValue '].toString().slice(0,1);
@@ -349,11 +350,11 @@ d3.csv('./data/fortune500_2020.csv').then((data, error) => {
   const g = svgUS500.append('g')
     .attr('class', 'us500-group')
 
-  drawGraph(drawData, g, graphTitle)
+  drawGraph(drawData, g, sourceURL)
 }) 
 
 
-function drawGraph(drawData, selection, graphTitle) {
+function drawGraph(drawData, selection, sourceURL) {
 
   let countTotal = drawData.reduce(((acc, curr) => curr.count + acc), 0);
 
@@ -420,12 +421,44 @@ function drawGraph(drawData, selection, graphTitle) {
     .attr('transform', `translate(${margin.left - 30}, ${height / 2}) rotate(270)`)
     .style('fill', axisLabelColor)
     .style('font-weight', 'bold')
-    .text('Occurance %')
+    .text('Distribution (%)')
+
+  let legend = selection.append('g')
+    .attr('class', 'legend-box')
+    .attr('transform', `translate(420, 20)`)
+
+  legend.append('rect')
+    .attr('width', 150)
+    .attr('height', 50)
+    .style('border', `2px solid white`)
+    .style('fill', "white")
+    
+  legend.append('circle')
+    .attr('cx', 15)
+    .attr('cy', 25)
+    .attr('r', 5)
+    .attr('fill', dotColor)
+  
+  legend.append('text')
+    .attr('x', 25)
+    .attr('y', 25)
+    .attr('fill', axisLabelColor)
+    .attr('text-anchor', 'start')
+    .attr('alignment-baseline', 'central')
+    .attr('font-weight', 'bold')
+    .text('Benford\'s Law')
 
   selection.append('text')
-    .attr('class', 'graph-title')
-    .attr('x', width / 2)
-    .attr('y', 50)
-    .attr('text-anchor', 'middle')
-    .text(graphTitle)
+    .attr('x', 590)
+    .attr('y', 390)
+    .attr('class', 'source-link')
+    .attr('text-anchor', 'end')
+    .attr('alignment-baseline', 'central')
+    .style('fill', borderColor)
+    .style('font-size', 10)
+    .style('font-style', 'italic')
+    .text(`source: ${sourceURL}`)
+    .on('mouseover', () => d3.select(event.currentTarget).style('fill', 'black'))
+    .on('mouseout', () => d3.select(event.currentTarget).style('fill', borderColor))
+    .on('click', () => window.open(sourceURL))
 }
