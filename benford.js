@@ -16,7 +16,7 @@ function showGraph(event, graphContent) {
 document.getElementById('fib-seq-tab').click();
 
 const margin = {
-  top: 40, right: 20, bottom: 30, left: 50
+  top: 40, right: 60, bottom: 30, left: 60
 };
 const width = 600;
 const height = 400;
@@ -204,7 +204,7 @@ function fibsData() {
   let drawData = [{digit: 1, count: 1}, {digit: 2, count: 1}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
   let prevNum = 1;
   let currNum = 1;
-  for (let i = 0; i < 1000; i++){
+  for (let i = 0; i < 998; i++){
     if (i <= 2) {
       drawData[0].count++
     } else {
@@ -243,7 +243,7 @@ d3.csv('./data/periodictable.csv').then((data, error) => {
   // data from https://gist.github.com/GoodmanSciences
   if (error) throw error;
   let sourceURL = "https://gist.github.com/GoodmanSciences"
-  let drawData = [{digit: 1, count: 1}, {digit: 2, count: 1}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
+  let drawData = [{digit: 1, count: 0}, {digit: 2, count: 0}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
   data.forEach(d => {
     let firstDigit = d.AtomicMass.toString().slice(0,1);
     if (firstDigit != 0) drawData[firstDigit - 1].count++;
@@ -274,7 +274,7 @@ d3.csv('./data/periodictable.csv').then((data, error) => {
 d3.csv('./data/fortune2000_2020.csv').then((data, error) => {
   if (error) throw error;
   let sourceURL = "https://www.forbes.com/global2000"
-  let drawData = [{digit: 1, count: 1}, {digit: 2, count: 1}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
+  let drawData = [{digit: 1, count: 0}, {digit: 2, count: 0}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
   data.forEach(d => {
     let firstDigit = d["Market Value"].toString().slice(0,1);
     if (firstDigit != 0) drawData[firstDigit - 1].count++;
@@ -306,7 +306,7 @@ d3.csv('./data/reddit.csv').then((data, error) => {
   // data from frontpagemetrics.com 2020/09/29
   if (error) throw error;
   let sourceURL = "https://frontpagemetrics.com/"
-  let drawData = [{digit: 1, count: 1}, {digit: 2, count: 1}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
+  let drawData = [{digit: 1, count: 0}, {digit: 2, count: 0}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
   data.forEach(d => {
     let firstDigit = d.Subscribers.toString().slice(0,1);
     if (firstDigit != 0) drawData[firstDigit - 1].count++;
@@ -432,7 +432,9 @@ function drawGraph(drawData, selection, sourceURL) {
     .attr('y', d => yScale((d.count/countTotal) * 100))
     .attr('width', d => xScale.bandwidth())
     .attr('height', d => yScale(0) - yScale((d.count/countTotal) * 100))
-    .attr('fill', barColor);
+    .attr('fill', barColor)
+    .on('mouseover', onMouseOver)
+    .on('mouseout', onMouseOut);
 
   selection.selectAll('circle')
     .data(benfordData)
@@ -527,4 +529,63 @@ function drawGraph(drawData, selection, sourceURL) {
     .on('mouseover', () => d3.select(event.currentTarget).style('fill', 'black'))
     .on('mouseout', () => d3.select(event.currentTarget).style('fill', borderColor))
     .on('click', () => window.open(sourceURL))
+
+    function onMouseOver(e, d) {
+      let sel = d3.select(this);
+      let mouseX = d3.pointer(e)[0];
+      let mouseY = d3.pointer(e)[1] - 100;
+
+      // sel.moveToFront();
+
+      sel.transition()
+        .duration(200)
+        .attr('x', d => xScale(d.digit) - 5)
+        .attr('y', d => yScale((d.count/countTotal) * 100))
+        .attr('width', xScale.bandwidth() + 10)
+        .attr('height', d => yScale(0) - yScale((d.count/countTotal) * 100))
+        .style('fill', '#00ADFF');
+      
+      selection.append('rect')
+        .attr('class', 'val-rect val')
+        .attr('width', 125)
+        .attr('height', 75)
+        .attr('x', mouseX)
+        .attr('y', mouseY)
+        .transition()
+        .duration(150)
+        .style('fill', 'pink')
+
+      selection.append('text')
+        .attr('class', 'val')
+        .style('fill', 'transparent')
+        .selectAll('tspan')
+        .data(() => {
+          let count = `${d.count} instances`;
+          let total = `out of ${countTotal}`;
+          let percentage = (d.count / countTotal * 100).toFixed(1) + "%";
+          return [count, total, percentage];
+        })
+        .join('tspan')
+        .attr('x', mouseX + 5)
+        .attr('y', mouseY + 20)
+        .attr('dy', (d,i) => i === 1 ? '1.2em' : i === 2 ? '2.6em' : 0 )
+        .style('font-weight', (d,i) => i === 2 ? 'bold' : undefined)
+        .style('font-family', 'sans-serif')
+        .transition()
+        .duration(200)
+        .style('fill', 'green')
+        .text(d => d);
+    }
+
+    function onMouseOut(d, i) {
+      d3.select(this)
+        .transition()
+        .duration(200)
+        .style('fill', barColor)
+        .attr('x', d => xScale(d.digit))
+        .attr('width', xScale.bandwidth())
+
+      d3.selectAll('.val')
+        .remove()
+    }
 }
