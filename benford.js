@@ -180,7 +180,7 @@ d3.json('./data/WorldPop.json').then((data, error) => {
 fibsData();
 
 function fibsData() {
-  let sourceURL = "https://en.wikipedia.org/wiki/Fibonacci_number"
+  let sourceURL = null;
   let drawData = [{digit: 1, count: 1}, {digit: 2, count: 1}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
   let prevNum = 1;
   let currNum = 1;
@@ -474,7 +474,9 @@ function drawGraph(drawData, selection, sourceURL) {
     .style('fill', borderColor)
     .style('font-size', 10)
     .style('font-style', 'italic')
-    .text(`source: ${sourceURL}`)
+    .text(d => {
+      return sourceURL ? `source: ${sourceURL}` : null
+    })
     .on('mouseover', () => d3.select(event.currentTarget).style('fill', 'black'))
     .on('mouseout', () => d3.select(event.currentTarget).style('fill', borderColor))
     .on('click', () => window.open(sourceURL))
