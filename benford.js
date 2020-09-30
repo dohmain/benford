@@ -439,9 +439,9 @@ function drawGraph(drawData, selection, sourceURL) {
     .data(benfordData)
     .join('circle')
     .attr('class', 'benford-dot')
-    .attr('cx', d => xScale(d.digit) + 20)
+    .attr('cx', d => xScale(d.digit) + 18)
     .attr('cy', d => yScale(d.count / 10))
-    .attr('r', 5)
+    .attr('r', 4)
     .attr('fill', dotColor)
 
   selection.append('line')
@@ -542,19 +542,18 @@ function drawGraph(drawData, selection, sourceURL) {
         .attr('height', d => yScale(0) - yScale((d.count/countTotal) * 100))
         .style('fill', '#00ADFF');
       
-      selection.append('rect')
+      let labelGroup = selection.append('g')
+        .attr('class', 'mouseLabel');
+
+      labelGroup.append('rect')
         .attr('class', 'val-rect val')
         .attr('width', 125)
         .attr('height', 75)
         .attr('x', mouseX)
         .attr('y', mouseY)
-        .style('fill', 'transparent')
-        .transition()
-        .duration(1500)
-        .style('fill', 'pink')
-        .style('border', `1px solid ${borderColor}`)
+        .style('fill', 'rgba(200, 210, 220, .4)')
 
-      selection.append('text')
+      labelGroup.append('text')
         .attr('class', 'val')
         // .style('fill', 'transparent')
         .selectAll('tspan')
@@ -563,26 +562,16 @@ function drawGraph(drawData, selection, sourceURL) {
           let count = `${d.count} instances`;
           let total = `out of ${countTotal}`;
           let percentage = (d.count / countTotal * 100).toFixed(1) + "%";
-          return [count, total, percentage];
+          return [percentage, count, total];
         })
         .join('tspan')
         .attr('x', mouseX + 5)
         .attr('y', mouseY + 20)
         .text(d => d)
-        .attr('dy', (d,i) => i === 1 ? '1.2em' : i === 2 ? '2.6em' : 0 )
-        .style('font-weight', (d,i) => i === 2 ? 'bold' : undefined)
+        .attr('dy', (d,i) => i === 1 ? '1.4em' : i === 2 ? '2.6em' : 0 )
+        .style('font-weight', (d,i) => i === 0 ? 'bold' : undefined)
         .style('font-family', 'sans-serif')
-        .style('font-size', 15)
-        .transition()
-        .duration(200)
-        .style('font-size', 12)
 
-        // d3.selectAll('tspan')
-        // .transition()
-        // .duration(500)
-        // .style('font-size', 12)
-        // .style('fill', borderColor)
-        // .text(d => d)
     }
 
     function onMouseOut(d, i) {
