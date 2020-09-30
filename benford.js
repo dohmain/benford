@@ -74,11 +74,11 @@ d3.json('https://api.covidtracking.com/v1/us/daily.json').then((data, error) => 
 
   function redraw(drawData) {
     let sourceURL = "https://covidtracking.com/"
-    svgCovid.append('rect')
-      .attr('class', 'main-div')
-      .style('fill', backgroundColor)
-      .attr('width', width)
-      .attr('height', height);
+    // svgCovid.append('rect')
+    //   .attr('class', 'main-div')
+    //   .style('fill', backgroundColor)
+    //   .attr('width', width)
+    //   .attr('height', height);
     
     const g = svgCovid.append('g')
       .attr('class', 'covid-graph-group');
@@ -433,7 +433,10 @@ function drawGraph(drawData, selection, sourceURL) {
     .on('mouseover', onMouseOver)
     .on('mouseout', onMouseOut);
 
-  selection.selectAll('circle')
+  drawBenford();
+
+  function drawBenford() {
+    selection.selectAll('circle')
     .data(benfordData)
     .join('circle')
     .attr('class', 'benford-dot')
@@ -441,14 +444,29 @@ function drawGraph(drawData, selection, sourceURL) {
     .attr('cy', d => yScale(d.count / 10))
     .attr('r', 4)
     .attr('fill', dotColor)
+  }
 
-  selection.append('line')
-    .attr('x1', margin.left)
-    .attr('y1', yScale(11.1))
-    .attr('x2', width - margin.right)
-    .attr('y2', yScale(11.1))
-    .style('stroke', 'rgb(93, 128, 145)')
-    .style('stroke-width', 1)
+  function updateBenford() {
+    selection.selectAll('.benford-dot').remove();
+    drawBenford();
+  }
+
+  drawEven()
+
+  function drawEven() {
+    selection.append('line')
+      .attr('x1', margin.left)
+      .attr('y1', yScale(11.1))
+      .attr('x2', width - margin.right)
+      .attr('y2', yScale(11.1))
+      .style('stroke', 'rgb(93, 128, 145)')
+      .style('stroke-width', .5);
+  }
+
+  function updateEven() {
+    selection.selectAll('line').remove();
+    drawEven();
+  }
   
   selection.append('text')
     .attr('x', width - margin.right)
@@ -491,25 +509,42 @@ function drawGraph(drawData, selection, sourceURL) {
     .attr('transform', `translate(420, 20)`)
 
   legend.append('rect')
-    .attr('width', 150)
+    .attr('width', 170)
     .attr('height', 50)
     .style('border', `2px solid white`)
     .style('fill', "white")
     
-  legend.append('circle')
-    .attr('cx', 15)
-    .attr('cy', 25)
-    .attr('r', 5)
+  legend.append('rect')
+    .attr('x', 10)
+    .attr('y', 10)
+    .attr('width', 10)
+    .attr('height', 10)
     .attr('fill', dotColor)
   
   legend.append('text')
     .attr('x', 25)
-    .attr('y', 25)
+    .attr('y', 15)
     .attr('fill', axisLabelColor)
     .attr('text-anchor', 'start')
     .attr('alignment-baseline', 'central')
     .attr('font-weight', 'bold')
     .text('Benford\'s Law')
+
+  legend.append('rect')
+    .attr('x', 10)
+    .attr('y', 30)
+    .attr('width', 10)
+    .attr('height', 10)
+    .attr('fill', 'rgba(200, 210, 220)')
+
+  legend.append('text')
+    .attr('x', 25)  
+    .attr('y', 35)
+    .attr('fill', axisLabelColor)
+    .attr('text-anchor', 'start')
+    .attr('alignment-baseline', 'central')
+    .attr('font-weight', 'bold')
+    .text('Even Distribution')
 
   selection.append('text')
     .attr('x', 590)
@@ -531,6 +566,9 @@ function drawGraph(drawData, selection, sourceURL) {
       let sel = d3.select(this);
       let mouseX = d3.pointer(e)[0];
       let mouseY = d3.pointer(e)[1] - 100;
+      sel.moveToFront();
+      updateBenford();
+      updateEven();
 
       sel.transition()
         .duration(200)
@@ -549,13 +587,11 @@ function drawGraph(drawData, selection, sourceURL) {
         .attr('height', 75)
         .attr('x', mouseX)
         .attr('y', mouseY)
-        .style('fill', 'rgba(200, 210, 220, .4)')
+        .style('fill', 'rgba(200, 210, 220, .6)')
 
       labelGroup.append('text')
         .attr('class', 'val')
-        // .style('fill', 'transparent')
         .selectAll('tspan')
-        .style('fill', backgroundColor)
         .data(() => {
           let count = `${d.count} instances`;
           let total = `out of ${countTotal}`;
@@ -580,7 +616,17 @@ function drawGraph(drawData, selection, sourceURL) {
         .attr('x', d => xScale(d.digit))
         .attr('width', xScale.bandwidth())
 
-      d3.selectAll('.val')
+      updateBenford();
+      updateEven();
+
+      d3.selectAll('.mouseLabel')
         .remove()
     }
 }
+
+
+d3.selection.prototype.moveToFront = function() {
+  return this.each(function(){
+  this.parentNode.appendChild(this);
+  });
+};
