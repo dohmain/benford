@@ -76,14 +76,18 @@ h3 {
   text-align: center;
 }
 
-p {
-  padding: .35em 1.2em;
-  line-height: 1.2;
+blockquote{
+  padding: 0em 1.5em 1em 1.5em;
+  line-height: 1.35;
+  text-indent: 2em;
+  text-align: justify;
+  font-size: 14px;
 }
 
 .main-container {
   width: 812px;
   margin-top: 50px;
+  background-color: #E5E5E5;
 }
 
 .intro-container {
@@ -155,5 +159,4 @@ p {
 
 .source-link:hover {
   cursor: pointer; 
-  color: blue;
 }
