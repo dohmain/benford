@@ -42,7 +42,6 @@ d3.json('./data/USDaily.json').then((data, error) => {
     {negativeIncrease: [{digit: 1, count: 0}, {digit: 2, count: 0}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]},
     {positiveIncrease: [{digit: 1, count: 0}, {digit: 2, count: 0}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]},
     {totalTestResultsIncrease: [{digit: 1, count: 0}, {digit: 2, count: 0}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]},
-    {testdata: [{digit: 1, count: 12}, {digit: 2, count: 8}, {digit: 3, count: 6}, {digit: 4, count: 4}, {digit: 5, count: 3}, {digit: 6, count: 3}, {digit: 7, count: 2}, {digit: 8, count: 2}, {digit: 9, count: 1}]}
   ];
   const categories = ['deathIncrease', 'hospitalizedIncrease', 'negativeIncrease', 'positiveIncrease', "totalTestResultsIncrease"]
   data.forEach(d => {
@@ -60,7 +59,7 @@ d3.json('./data/USDaily.json').then((data, error) => {
     .attr('height', height)
     .style('border', `3px solid ${borderColor}`)
 
-  let newData = Object.values(Object.values(firstDigitCount).filter(d => Object.keys(d)[0] === 'testdata')[0])[0];
+  let newData = Object.values(Object.values(firstDigitCount).filter(d => Object.keys(d)[0] === 'deathIncrease')[0])[0];
   function changeData(type) {
     newData = Object.values(Object.values(firstDigitCount).filter(d => Object.keys(d)[0] === type)[0])[0];
   }
@@ -371,7 +370,7 @@ d3.csv('./data/fortune500_2020.csv').then((data, error) => {
 
   if (error) throw error;
   let sourceURL = "https://fortune.com/fortune500/"
-  let drawData = [{digit: 1, count: 1}, {digit: 2, count: 1}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
+  let drawData = [{digit: 1, count: 0}, {digit: 2, count: 0}, {digit: 3, count: 0}, {digit: 4, count: 0}, {digit:5, count: 0}, {digit: 6, count: 0}, {digit: 7, count: 0}, {digit: 8, count: 0}, {digit: 9, count: 0}]
   data.forEach(d => {
     let firstDigit = d['MarketValue '].toString().slice(0,1);
     if (firstDigit != 0 && !isNaN(firstDigit)) drawData[firstDigit - 1].count++;
@@ -397,7 +396,7 @@ d3.csv('./data/fortune500_2020.csv').then((data, error) => {
   d3.select('#us500-graph')
   .append('div')
   .attr('class', 'graph-description-container')
-  .html('<h3 class="graph-title">Market Value of Fortune 500 US Companies</h3><p class="description-text">Fortune 500 - 2020 list</p>')
+  .html('<h3 class="graph-title">Market Value of Fortune 500 US Companies</h3><p class="description-text">Fortune 500 - 2020 list; market value for 28 companies are not given</p>')
 }) 
 
 
@@ -535,8 +534,6 @@ function drawGraph(drawData, selection, sourceURL) {
       let mouseX = d3.pointer(e)[0];
       let mouseY = d3.pointer(e)[1] - 100;
 
-      // sel.moveToFront();
-
       sel.transition()
         .duration(200)
         .attr('x', d => xScale(d.digit) - 5)
@@ -551,14 +548,17 @@ function drawGraph(drawData, selection, sourceURL) {
         .attr('height', 75)
         .attr('x', mouseX)
         .attr('y', mouseY)
+        .style('fill', 'transparent')
         .transition()
-        .duration(150)
+        .duration(1500)
         .style('fill', 'pink')
+        .style('border', `1px solid ${borderColor}`)
 
       selection.append('text')
         .attr('class', 'val')
-        .style('fill', 'transparent')
+        // .style('fill', 'transparent')
         .selectAll('tspan')
+        .style('fill', backgroundColor)
         .data(() => {
           let count = `${d.count} instances`;
           let total = `out of ${countTotal}`;
@@ -568,13 +568,21 @@ function drawGraph(drawData, selection, sourceURL) {
         .join('tspan')
         .attr('x', mouseX + 5)
         .attr('y', mouseY + 20)
+        .text(d => d)
         .attr('dy', (d,i) => i === 1 ? '1.2em' : i === 2 ? '2.6em' : 0 )
         .style('font-weight', (d,i) => i === 2 ? 'bold' : undefined)
         .style('font-family', 'sans-serif')
+        .style('font-size', 15)
         .transition()
         .duration(200)
-        .style('fill', 'green')
-        .text(d => d);
+        .style('font-size', 12)
+
+        // d3.selectAll('tspan')
+        // .transition()
+        // .duration(500)
+        // .style('font-size', 12)
+        // .style('fill', borderColor)
+        // .text(d => d)
     }
 
     function onMouseOut(d, i) {
