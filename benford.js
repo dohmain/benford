@@ -13,7 +13,7 @@ function showGraph(event, graphContent) {
   event.currentTarget.className += ' active';
 }
 
-document.getElementById('covid-tab').click();
+document.getElementById('fib-seq-tab').click();
 
 const margin = {
   top: 40, right: 20, bottom: 30, left: 50
@@ -71,6 +71,7 @@ d3.json('./data/USDaily.json').then((data, error) => {
     .on('change', () => {
       changeData(d3.select('input:checked').property('value'))
       d3.selectAll('.covid-graph-group').remove();
+      d3.selectAll('.graph-description-container').remove();
       redraw(newData);
     });
 
@@ -86,6 +87,11 @@ d3.json('./data/USDaily.json').then((data, error) => {
       .attr('class', 'covid-graph-group');
 
     drawGraph(drawData, g, sourceURL);
+
+    d3.select('#covid-graph')
+      .append('div')
+      .attr('class', 'graph-description-container')
+      .html('<h3 class="graph-title">Daily Change in Number of Cases by Category</h3><p class="description-text">Using latest data from covidtracking.com</p>')
   }
 })
 
@@ -120,6 +126,11 @@ d3.csv('./data/2019_USPOPEST.csv').then((data, error) => {
     .attr('class', 'us-pop-graph-group')
 
   drawGraph(drawData, g, sourceURL)
+
+  d3.select('#us-pop-graph')
+  .append('div')
+  .attr('class', 'graph-description-container')
+  .html('<h3 class="graph-title">State Populations of the U.S.</h3><p class="description-text">Using 2019 estimated population. Includes 50states + D.C. and Puerto Rico</p>')
 })
 
 d3.json('./data/WorldPop.json').then((data, error) => {
@@ -132,7 +143,6 @@ d3.json('./data/WorldPop.json').then((data, error) => {
     let popFirstDigit = data.pop2020.toString().slice(0,1);
     if (popFirstDigit != 0) drawData[popFirstDigit - 1].count++;
   })
-
   const svgWorldPop = d3.select('#world-pop-graph')
     .append('svg')
     .attr('width', width)
@@ -148,6 +158,11 @@ d3.json('./data/WorldPop.json').then((data, error) => {
   const g = svgWorldPop.append('g')
     .attr('class', 'world-pop-graph-group')
   drawGraph(drawData, g, sourceURL)
+
+  d3.select('#world-pop-graph')
+  .append('div')
+  .attr('class', 'graph-description-container')
+  .html('<h3 class="graph-title">Population of Countries of the World</h3><p class="description-text">Using 2020 estimate from worldpopulationreview.com</p>')
 })
 
 d3.json('./data/WorldPop.json').then((data, error) => {
@@ -175,6 +190,11 @@ d3.json('./data/WorldPop.json').then((data, error) => {
   const g = svgWorldArea.append('g')
     .attr('class', 'world-pop-graph-group')
   drawGraph(drawData, g, sourceURL)
+
+  d3.select('#world-area-graph')
+  .append('div')
+  .attr('class', 'graph-description-container')
+  .html('<h3 class="graph-title">Area of Countries Around the World</h3><p class="description-text">Using km² as unit provided by worldpopulation.com</p>')
 })
 
 fibsData();
@@ -212,6 +232,11 @@ function fibsData() {
     .attr('class', 'fib-seq-group')
 
   drawGraph(drawData, g, sourceURL)
+
+  d3.select('#fib-seq-graph')
+  .append('div')
+  .attr('class', 'graph-description-container')
+  .html('<h3 class="graph-title">Fibonacci Numbers</h3><p class="description-text">to the 1000th Fibonacci number</p>')
 }
 
 d3.csv('./data/periodictable.csv').then((data, error) => {
@@ -240,6 +265,10 @@ d3.csv('./data/periodictable.csv').then((data, error) => {
     .attr('class', 'elements-group')
 
   drawGraph(drawData, g, sourceURL)
+  d3.select('#elements-graph')
+  .append('div')
+  .attr('class', 'graph-description-container')
+  .html('<h3 class="graph-title">Atomic Mass of Elements</h3><p class="description-text">atomic mass of elements provided by GoodmanSciences</p>')
 })
 
 d3.csv('./data/fortune2000_2020.csv').then((data, error) => {
@@ -267,6 +296,10 @@ d3.csv('./data/fortune2000_2020.csv').then((data, error) => {
     .attr('class', 'fortunes-group')
 
   drawGraph(drawData, g, sourceURL)
+  d3.select('#fortunes-graph')
+  .append('div')
+  .attr('class', 'graph-description-container')
+  .html('<h3 class="graph-title">Market Value of Fortune 2000 Global Companies</h3><p class="description-text">Fortune 2000 - 2020 list</p>')
 })
 
 d3.csv('./data/reddit.csv').then((data, error) => {
@@ -295,6 +328,11 @@ d3.csv('./data/reddit.csv').then((data, error) => {
     .attr('class', 'reddit-group')
 
   drawGraph(drawData, g, sourceURL)
+
+  d3.select('#reddit-graph')
+  .append('div')
+  .attr('class', 'graph-description-container')
+  .html('<h3 class="graph-title">Reddit Subscribers by SubReddit</h3><p class="description-text">top 10,000 subreddits; data fetched 2020/09/29 from frontpagemetrics.com</p>')
 })
 
 d3.csv('./data/movies2019.csv').then((data, error) => {
@@ -323,6 +361,10 @@ d3.csv('./data/movies2019.csv').then((data, error) => {
     .attr('class', 'movies-group')
 
   drawGraph(drawData, g, sourceURL)
+  d3.select('#movies-graph')
+  .append('div')
+  .attr('class', 'graph-description-container')
+  .html('<h3 class="graph-title">Box Office Revenues by Movie</h3><p class="description-text">2019 gross revenues</p>')
 }) 
 
 d3.csv('./data/fortune500_2020.csv').then((data, error) => {
@@ -351,6 +393,11 @@ d3.csv('./data/fortune500_2020.csv').then((data, error) => {
     .attr('class', 'us500-group')
 
   drawGraph(drawData, g, sourceURL)
+
+  d3.select('#fortunes-graph')
+  .append('div')
+  .attr('class', 'graph-description-container')
+  .html('<h3 class="graph-title">Market Value of Fortune 500 US Companies</h3><p class="description-text">Fortune 500 - 2020 list</p>')
 }) 
 
 
