@@ -59,7 +59,8 @@ body {
 .intro-container h1 {
   font-size: 28px;
   font-weight: bold;
-  padding: 1em 1.2em;
+  padding: 1em 1.2em .5em 1.2em;
+  text-decoration: underline rgb(108, 171, 201);
 }
 
 h2 {

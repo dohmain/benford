@@ -20,12 +20,10 @@ const margin = {
 };
 const width = 600;
 const height = 400;
-// const barColor = "rgba(111, 111, 111, .5)";
 const barColor = "rgba(108, 171, 201, 1)";
 const borderColor = "rgba(111, 111, 111)";
 const backgroundColor = "#E5E5E5";
 const dotColor = "rgb(162, 45, 63)";
-// const axisLabelColor =  "rgb(111, 111, 111)";
 const axisLabelColor = "rgb(52, 118, 148)"
 const axisLineColor = "black"
 
@@ -33,7 +31,7 @@ let benfordData = [
     {digit: 1, count: 301}, {digit: 2, count: 176}, {digit: 3, count: 125}, {digit: 4, count: 97}, {digit: 5, count: 79}, {digit: 6, count: 67}, {digit: 7, count: 58}, {digit: 8, count: 51}, {digit: 9, count: 46}
   ]
 
-d3.json('./data/USDaily.json').then((data, error) => {
+d3.json('https://api.covidtracking.com/v1/us/daily.json').then((data, error) => {
   // data from covidtracking.com
   if (error) throw error;
   let firstDigitCount = [
@@ -90,7 +88,7 @@ d3.json('./data/USDaily.json').then((data, error) => {
     d3.select('#covid-graph')
       .append('div')
       .attr('class', 'graph-description-container')
-      .html('<h3 class="graph-title">Daily Change in Number of Cases by Category</h3><p class="description-text">Using latest data from covidtracking.com</p>')
+      .html('<h3 class="graph-title">Daily Change in Number of Cases by Category</h3><p class="description-text">with latest data from covidtracking.com</p>')
   }
 })
 
@@ -161,7 +159,7 @@ d3.json('./data/WorldPop.json').then((data, error) => {
   d3.select('#world-pop-graph')
   .append('div')
   .attr('class', 'graph-description-container')
-  .html('<h3 class="graph-title">Population of Countries of the World</h3><p class="description-text">Using 2020 estimate from worldpopulationreview.com</p>')
+  .html('<h3 class="graph-title">Population of Countries of the World</h3><p class="description-text">2020 population estimate from worldpopulationreview.com</p>')
 })
 
 d3.json('./data/WorldPop.json').then((data, error) => {
@@ -193,7 +191,7 @@ d3.json('./data/WorldPop.json').then((data, error) => {
   d3.select('#world-area-graph')
   .append('div')
   .attr('class', 'graph-description-container')
-  .html('<h3 class="graph-title">Area of Countries Around the World</h3><p class="description-text">Using km² as unit provided by worldpopulation.com</p>')
+  .html('<h3 class="graph-title">Area of Countries Around the World</h3><p class="description-text">area of countries of the world (in km²)</p>')
 })
 
 fibsData();
@@ -267,7 +265,7 @@ d3.csv('./data/periodictable.csv').then((data, error) => {
   d3.select('#elements-graph')
   .append('div')
   .attr('class', 'graph-description-container')
-  .html('<h3 class="graph-title">Atomic Mass of Elements</h3><p class="description-text">atomic mass of elements provided by GoodmanSciences</p>')
+  .html('<h3 class="graph-title">Atomic Mass of Elements</h3><p class="description-text">atomic mass of 118 elements on the periodic table</p>')
 })
 
 d3.csv('./data/fortune2000_2020.csv').then((data, error) => {
