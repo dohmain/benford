@@ -56,8 +56,9 @@ body {
 }
 
 .intro-container h1 {
-  font-size: 24px;
-  padding: 1em 1.2em
+  font-size: 28px;
+  font-weight: bold;
+  padding: 1.2em 1.2em
 }
 
 .intro-container {
