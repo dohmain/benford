@@ -1,14 +1,18 @@
 function showGraph(event, graphContent) {
   let graphs = document.getElementsByClassName('graph');
   for (let i = 0; i < graphs.length; i++) {
-    graphs[i].style.display = "none"
+    graphs[i].style.display = "none";
   };
 
   let tabLabels = document.getElementsByClassName('tab-label');
   for (let i = 0; i < tabLabels.length; i ++) {
-    tabLabels[i].className = tabLabels[i].className.replace('active', '')
+    tabLabels[i].className = tabLabels[i].className.replace('active', '');
   };
-  document.getElementById(graphContent).style.display = 'block';
+
+  let blocks = document.getElementsByClassName(graphContent);
+  for (let i = 0; i <  blocks.length; i++) {
+    blocks[i].style.display = 'block';
+  }
 
   event.currentTarget.className += ' active';
 }
@@ -55,7 +59,7 @@ d3.json('https://api.covidtracking.com/v1/us/daily.json').then((data, error) => 
     .append('svg')
     .attr('width', width)
     .attr('height', height)
-    .style('border', `3px solid ${borderColor}`)
+    // .style('border', `3px solid ${borderColor}`)
 
   let newData = Object.values(Object.values(firstDigitCount).filter(d => Object.keys(d)[0] === 'deathIncrease')[0])[0];
   function changeData(type) {
@@ -74,18 +78,18 @@ d3.json('https://api.covidtracking.com/v1/us/daily.json').then((data, error) => 
 
   function redraw(drawData) {
     let sourceURL = "https://covidtracking.com/"
-    // svgCovid.append('rect')
-    //   .attr('class', 'main-div')
-    //   .style('fill', backgroundColor)
-    //   .attr('width', width)
-    //   .attr('height', height);
+    svgCovid.append('rect')
+      .attr('class', 'main-div')
+      .style('fill', backgroundColor)
+      .attr('width', width)
+      .attr('height', height);
     
     const g = svgCovid.append('g')
       .attr('class', 'covid-graph-group');
 
     drawGraph(drawData, g, sourceURL);
 
-    d3.select('#covid-graph')
+    d3.select('#covid-description')
       .append('div')
       .attr('class', 'graph-description-container')
       .html('<h3 class="graph-title">Daily Change in Number of Cases by Category</h3><p class="description-text">with latest data from covidtracking.com</p>')
@@ -111,7 +115,7 @@ d3.csv('./data/2019_USPOPEST.csv').then((data, error) => {
     .append('svg')
     .attr('width', width)
     .attr('height', height)
-    .style('border', `3px solid ${borderColor}`)
+    // .style('border', `3px solid ${borderColor}`)
 
   svgUSPop.append('rect')
     .attr('class', 'main-div')
@@ -124,7 +128,7 @@ d3.csv('./data/2019_USPOPEST.csv').then((data, error) => {
 
   drawGraph(drawData, g, sourceURL)
 
-  d3.select('#us-pop-graph')
+  d3.select('#us-pop-description')
   .append('div')
   .attr('class', 'graph-description-container')
   .html('<h3 class="graph-title">State Populations of the U.S.</h3><p class="description-text">Using 2019 estimated population. Includes 50states + D.C. and Puerto Rico</p>')
@@ -144,7 +148,7 @@ d3.json('./data/WorldPop.json').then((data, error) => {
     .append('svg')
     .attr('width', width)
     .attr('height', height)
-    .style('border', `3px solid ${borderColor}`)
+    // .style('border', `3px solid ${borderColor}`)
 
   svgWorldPop.append('rect')
     .attr('class', 'main-div')
@@ -153,10 +157,10 @@ d3.json('./data/WorldPop.json').then((data, error) => {
     .attr('height', height);
 
   const g = svgWorldPop.append('g')
-    .attr('class', 'world-pop-graph-group')
+    // .attr('class', 'world-pop-description')
   drawGraph(drawData, g, sourceURL)
 
-  d3.select('#world-pop-graph')
+  d3.select('#world-pop-description')
   .append('div')
   .attr('class', 'graph-description-container')
   .html('<h3 class="graph-title">Population of Countries of the World</h3><p class="description-text">2020 population estimate from worldpopulationreview.com</p>')
@@ -176,7 +180,7 @@ d3.json('./data/WorldPop.json').then((data, error) => {
     .append('svg')
     .attr('width', width)
     .attr('height', height)
-    .style('border', `3px solid ${borderColor}`)
+    // .style('border', `3px solid ${borderColor}`)
 
   svgWorldArea.append('rect')
     .attr('class', 'main-div')
@@ -185,10 +189,10 @@ d3.json('./data/WorldPop.json').then((data, error) => {
     .attr('height', height);
 
   const g = svgWorldArea.append('g')
-    .attr('class', 'world-pop-graph-group')
+    // .attr('class', 'world-pop-graph-group')
   drawGraph(drawData, g, sourceURL)
 
-  d3.select('#world-area-graph')
+  d3.select('#world-area-description')
   .append('div')
   .attr('class', 'graph-description-container')
   .html('<h3 class="graph-title">Area of Countries Around the World</h3><p class="description-text">area of countries of the world (in km²)</p>')
@@ -217,7 +221,7 @@ function fibsData() {
     .append('svg')
     .attr('width', width)
     .attr('height', height)
-    .style('border', `3px solid ${borderColor}`)
+    // .style('border', `3px solid ${borderColor}`)
 
   svgFibSeq.append('rect')
     .attr('class', 'main-div')
@@ -230,7 +234,7 @@ function fibsData() {
 
   drawGraph(drawData, g, sourceURL)
 
-  d3.select('#fib-seq-graph')
+  d3.select('#fib-seq-description')
   .append('div')
   .attr('class', 'graph-description-container')
   .html('<h3 class="graph-title">Fibonacci Numbers</h3><p class="description-text">to the 1000th Fibonacci number</p>')
@@ -250,7 +254,7 @@ d3.csv('./data/periodictable.csv').then((data, error) => {
     .append('svg')
     .attr('width', width)
     .attr('height', height)
-    .style('border', `3px solid ${borderColor}`)
+    // .style('border', `3px solid ${borderColor}`)
 
     svgPerTable.append('rect')
     .attr('class', 'main-div')
@@ -262,7 +266,7 @@ d3.csv('./data/periodictable.csv').then((data, error) => {
     .attr('class', 'elements-group')
 
   drawGraph(drawData, g, sourceURL)
-  d3.select('#elements-graph')
+  d3.select('#elements-description')
   .append('div')
   .attr('class', 'graph-description-container')
   .html('<h3 class="graph-title">Atomic Mass of Elements</h3><p class="description-text">atomic mass of 118 elements on the periodic table</p>')
@@ -281,7 +285,7 @@ d3.csv('./data/fortune2000_2020.csv').then((data, error) => {
     .append('svg')
     .attr('width', width)
     .attr('height', height)
-    .style('border', `3px solid ${borderColor}`)
+    // .style('border', `3px solid ${borderColor}`)
 
   svgFortunesTable.append('rect')
     .attr('class', 'main-div')
@@ -293,7 +297,7 @@ d3.csv('./data/fortune2000_2020.csv').then((data, error) => {
     .attr('class', 'fortunes-group')
 
   drawGraph(drawData, g, sourceURL)
-  d3.select('#fortunes-graph')
+  d3.select('#fortunes-description')
   .append('div')
   .attr('class', 'graph-description-container')
   .html('<h3 class="graph-title">Market Value of Fortune 2000 Companies</h3><p class="description-text">Fortune 2000 - 2020 list</p>')
@@ -313,7 +317,7 @@ d3.csv('./data/reddit.csv').then((data, error) => {
     .append('svg')
     .attr('width', width)
     .attr('height', height)
-    .style('border', `3px solid ${borderColor}`)
+    // .style('border', `3px solid ${borderColor}`)
 
   svgReddit.append('rect')
     .attr('class', 'main-div')
@@ -326,7 +330,7 @@ d3.csv('./data/reddit.csv').then((data, error) => {
 
   drawGraph(drawData, g, sourceURL)
 
-  d3.select('#reddit-graph')
+  d3.select('#reddit-description')
   .append('div')
   .attr('class', 'graph-description-container')
   .html('<h3 class="graph-title">Reddit Subscribers by SubReddit</h3><p class="description-text">top 10,000 subreddits; data fetched 2020/09/29 from frontpagemetrics.com</p>')
@@ -346,7 +350,7 @@ d3.csv('./data/movies2019.csv').then((data, error) => {
     .append('svg')
     .attr('width', width)
     .attr('height', height)
-    .style('border', `3px solid ${borderColor}`)
+    // .style('border', `3px solid ${borderColor}`)
 
   svgMovies.append('rect')
     .attr('class', 'main-div')
@@ -358,7 +362,7 @@ d3.csv('./data/movies2019.csv').then((data, error) => {
     .attr('class', 'movies-group')
 
   drawGraph(drawData, g, sourceURL)
-  d3.select('#movies-graph')
+  d3.select('#movies-description')
   .append('div')
   .attr('class', 'graph-description-container')
   .html('<h3 class="graph-title">Box Office Revenues by Movie</h3><p class="description-text">2019 gross revenues</p>')
@@ -378,7 +382,7 @@ d3.csv('./data/fortune500_2020.csv').then((data, error) => {
     .append('svg')
     .attr('width', width)
     .attr('height', height)
-    .style('border', `3px solid ${borderColor}`)
+    // .style('border', `3px solid ${borderColor}`)
 
   svgUS500.append('rect')
     .attr('class', 'main-div')
@@ -391,7 +395,7 @@ d3.csv('./data/fortune500_2020.csv').then((data, error) => {
 
   drawGraph(drawData, g, sourceURL)
 
-  d3.select('#us500-graph')
+  d3.select('#us500-description')
   .append('div')
   .attr('class', 'graph-description-container')
   .html('<h3 class="graph-title">Market Value of Fortune 500 US Companies</h3><p class="description-text">Fortune 500 - 2020 list; market value for 28 companies are not given</p>')

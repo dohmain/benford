@@ -18,10 +18,9 @@
           In sets that obey this law, the digit "1" appears as the leading digit about 30% of the time while "9" is the leading digit about 5% of the time.
           This is contrary to the expectation that the occurance digits would be distributed evenly at about 11.1%.        
         </blockquote>
-        <p></p>
       </div>
       <div class="content-container">
-        <div>
+        <div id='content-top'>
           <div class="tabs-container">
             <div>
               <button class="tab-label tab" id="fib-seq-tab" onclick="showGraph(event, 'fib-seq-graph')">Fibonacci Numbers</button>
@@ -54,46 +53,63 @@
               <button class="tab-label tab" id="movies-tab" onclick="showGraph(event, 'movies-graph')">Movies</button>
             </div>
           </div>
-          <div class="tech-corner">
+          <div class="main-graph-container">
+            <div class="covid-graph-container graph covid-graph" id="covid-graph">
+              <div class="radio-container">
+                <label>
+                  <input class="radio-button" type="radio" name="category-radio" value="deathIncrease" checked>Deaths
+                </label>
+                <label>
+                  <input class="radio-button" type="radio" name="category-radio" value="hospitalizedIncrease">Hospitalizations
+                </label>
+                <label>
+                  <input class="radio-button" type="radio" name="category-radio" value="negativeIncrease">Negative Results
+                </label>
+                <label>
+                  <input class="radio-button" type="radio" name="category-radio" value="positiveIncrease">Positive Results
+                </label>
+                <label>
+                  <input class="radio-button" type="radio" name="category-radio" value="totalTestResultsIncrease">Total Test Results
+                </label>
+              </div>
+            </div>
+            <div class="us-pop-container graph us-pop-graph" id="us-pop-graph"></div>
+            <div class="world-pop-container graph world-pop-graph" id="world-pop-graph"></div>
+            <div class="world-area-container graph world-area-graph" id="world-area-graph"></div>
+            <div class="fib-seq-container graph fib-seq-graph" id="fib-seq-graph"></div>
+            <div class="elements-container graph elements-graph" id="elements-graph"></div>
+            <div class="fortunes-container graph fortunes-graph" id="fortunes-graph"></div>
+            <div class="us500-container graph us500-graph" id="us500-graph"></div>
+            <div class="reddit-container graph reddit-graph" id="reddit-graph"></div>
+            <div class="movies-container graph movies-graph" id="movies-graph"></div>
+          </div>
+        </div>
+        <div id='content-bottom'>
+          <div id="tech-corner">
             <h4>Created with: </h4>
-            <div class="tech-imgs">
+            <div id="tech-imgs">
               <img class="tech-img" src="./img/html5.png" />
               <img class="tech-img" src="./img/css3.png" />
               <img class="tech-img" src="./img/javascript.png" />
               <img class="tech-img" src="./img/d3js.png" />
             </div>
           </div>
-        </div>
-        <div class="main-graph-container">
-          <div class="covid-graph-container graph" id="covid-graph">
-            <div class="radio-container">
-              <label>
-                <input class="radio-button" type="radio" name="category-radio" value="deathIncrease" checked>Deaths
-              </label>
-              <label>
-                <input class="radio-button" type="radio" name="category-radio" value="hospitalizedIncrease">Hospitalizations
-              </label>
-              <label>
-                <input class="radio-button" type="radio" name="category-radio" value="negativeIncrease">Negative Results
-              </label>
-              <label>
-                <input class="radio-button" type="radio" name="category-radio" value="positiveIncrease">Positive Results
-              </label>
-              <label>
-                <input class="radio-button" type="radio" name="category-radio" value="totalTestResultsIncrease">Total Test Results
-              </label>
+          <div id='graph-description'>
+            <div>
+              <div class="graph covid-graph" id="covid-description"></div>
+              <div class="graph us-pop-graph" id="us-pop-description"></div>
+              <div class="graph world-pop-graph" id="world-pop-description"></div>
+              <div class="graph world-area-graph" id="world-area-description"></div>
+              <div class="graph fib-seq-graph" id="fib-seq-description"></div>
+              <div class="graph elements-graph" id="elements-description"></div>
+              <div class="graph fortunes-graph" id="fortunes-description"></div>
+              <div class="graph us500-graph" id="us500-description"></div>
+              <div class="graph reddit-graph" id="reddit-description"></div>
+              <div class="graph movies-graph" id="movies-description"></div>
             </div>
           </div>
-          <div class="us-pop-container graph" id="us-pop-graph"></div>
-          <div class="world-pop-container graph" id="world-pop-graph"></div>
-          <div class="world-area-container graph" id="world-area-graph"></div>
-          <div class="fib-seq-container graph" id="fib-seq-graph"></div>
-          <div class="elements-container graph" id="elements-graph"></div>
-          <div class="fortunes-container graph" id="fortunes-graph"></div>
-          <div class="us500-container graph" id="us500-graph"></div>
-          <div class="reddit-container graph" id="reddit-graph"></div>
-          <div class="movies-container graph" id="movies-graph"></div>
-        </div>
+        </div id='content-bottom'>
+
         <script src="./benford.js"></script>
       </div>
     </div>
