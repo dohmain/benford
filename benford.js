@@ -24,8 +24,8 @@ const margin = {
 };
 const width = 600;
 const height = 400;
-const barColor = "rgba(108, 171, 201, 1)";
-const borderColor = "rgba(111, 111, 111)";
+const barColor = "rgb(108, 171, 201)";
+const borderColor = "rgb(111, 111, 111)";
 const backgroundColor = "#E5E5E5";
 const dotColor = "rgb(162, 45, 63)";
 const axisLabelColor = "rgb(52, 118, 148)"
@@ -495,7 +495,7 @@ function drawGraph(drawData, selection, sourceURL) {
   
   selection.append('text')
     .attr('x', width / 2)
-    .attr('y', height - 8)
+    .attr('y', height - 5)
     .attr('text-anchor', 'middle')
     .style('fill', axisLabelColor)
     .style('font-weight', 'bold')
